@@ -106,15 +106,4 @@ struct Seg
       return nil
     end
   end
-
-  def capture(key : Symbol, store : Hash(Symbol, String))
-    str = extract
-
-    if str
-      store[key] = str
-      return true
-    else
-      return false
-    end
-  end
 end
