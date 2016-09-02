@@ -80,13 +80,13 @@ struct Seg
     end
   end
 
-  def match(regex : Regex) : String?
+  def consume(regex : Regex) : String?
     return nil if root?
 
     orig = @pos
-    str = extract
+    str = extract || "" # Regex's `match` has no method for Nil types.
 
-    if str && (matches = regex.match(str))
+    if matches = regex.match(str)
       return matches[0]
     else
       @pos = orig
