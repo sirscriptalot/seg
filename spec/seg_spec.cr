@@ -89,37 +89,37 @@ end
 describe "consume" do
   segment = Seg.new("/foo/bar/baz")
 
-  assert_equal segment.consume("bar"), false
+  assert_equal segment.consume("bar"), nil
   assert_equal segment.prev, ""
   assert_equal segment.curr, "/foo/bar/baz"
   assert !segment.root?
 
-  assert_equal segment.consume("fo"), false
+  assert_equal segment.consume("fo"), nil
   assert_equal segment.prev, ""
   assert_equal segment.curr, "/foo/bar/baz"
   assert !segment.root?
 
-  assert_equal segment.consume("foo"), true
+  assert_equal segment.consume("foo"), "foo"
   assert_equal segment.prev, "/foo"
   assert_equal segment.curr, "/bar/baz"
   assert !segment.root?
 
-  assert_equal segment.consume("foo"), false
+  assert_equal segment.consume("foo"), nil
   assert_equal segment.prev, "/foo"
   assert_equal segment.curr, "/bar/baz"
   assert !segment.root?
 
-  assert_equal segment.consume("bar"), true
+  assert_equal segment.consume("bar"), "bar"
   assert_equal segment.prev, "/foo/bar"
   assert_equal segment.curr, "/baz"
   assert !segment.root?
 
-  assert_equal segment.consume("baz"), true
+  assert_equal segment.consume("baz"), "baz"
   assert_equal segment.prev, "/foo/bar/baz"
   assert_equal segment.curr, ""
   assert segment.root?
 
-  assert_equal segment.consume("baz"), false
+  assert_equal segment.consume("baz"), nil
   assert_equal segment.prev, "/foo/bar/baz"
   assert_equal segment.curr, ""
   assert segment.root?

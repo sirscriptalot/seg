@@ -67,14 +67,16 @@ struct Seg
     return @path[@pos.succ, offs - @pos]
   end
 
-  def consume(str : String)
+  def consume(str : String) : String?
+    return nil if root?
+
     orig = @pos
 
     if str == extract
-      return true
+      return str
     else
       @pos = orig
-      return false
+      return nil
     end
   end
 
