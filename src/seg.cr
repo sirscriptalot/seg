@@ -80,14 +80,16 @@ struct Seg
     end
   end
 
-  def restore(str : String)
+  def restore(str : String) : String?
+    return nil if init?
+
     orig = @pos
 
     if str == retract
-      return true
+      return str
     else
       @pos = orig
-      return false
+      return nil
     end
   end
 

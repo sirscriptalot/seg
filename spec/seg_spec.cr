@@ -130,27 +130,27 @@ describe "restore" do
 
   3.times { segment.extract }
 
-  assert_equal segment.restore("foo"), false
+  assert_equal segment.restore("foo"), nil
   assert_equal segment.prev, "/foo/bar/baz"
   assert_equal segment.curr, ""
   assert segment.root?
 
-  assert_equal segment.restore("baz"), true
+  assert_equal segment.restore("baz"), "baz"
   assert_equal segment.prev, "/foo/bar"
   assert_equal segment.curr, "/baz"
   assert !segment.root?
 
-  assert_equal segment.restore("bar"), true
+  assert_equal segment.restore("bar"), "bar"
   assert_equal segment.prev, "/foo"
   assert_equal segment.curr, "/bar/baz"
   assert !segment.root?
 
-  assert_equal segment.restore("foo"), true
+  assert_equal segment.restore("foo"), "foo"
   assert_equal segment.prev, ""
   assert_equal segment.curr, "/foo/bar/baz"
   assert !segment.root?
 
-  assert_equal segment.restore("foo"), false
+  assert_equal segment.restore("foo"), nil
   assert_equal segment.prev, ""
   assert_equal segment.curr, "/foo/bar/baz"
   assert !segment.root?
