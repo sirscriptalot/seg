@@ -125,6 +125,38 @@ describe "consume" do
   assert segment.root?
 end
 
+describe "match" do
+  segment = Seg.new("/1-foo/2-bar/3-baz")
+
+  matcher = /\d+/
+  clasher = /\b\B/
+
+  assert_equal segment.match(clasher), nil
+  assert_equal segment.prev, ""
+  assert_equal segment.curr, "/1-foo/2-bar/3-baz"
+  assert !segment.root?
+
+  assert_equal segment.match(matcher), "1"
+  assert_equal segment.prev, "/1-foo"
+  assert_equal segment.curr, "/2-bar/3-baz"
+  assert !segment.root?
+
+  assert_equal segment.match(matcher), "2"
+  assert_equal segment.prev, "/1-foo/2-bar"
+  assert_equal segment.curr, "/3-baz"
+  assert !segment.root?
+
+  assert_equal segment.match(matcher), "3"
+  assert_equal segment.prev, "/1-foo/2-bar/3-baz"
+  assert_equal segment.curr, ""
+  assert segment.root?
+
+  assert_equal segment.match(matcher), nil
+  assert_equal segment.prev, "/1-foo/2-bar/3-baz"
+  assert_equal segment.curr, ""
+  assert segment.root?
+end
+
 describe "restore" do
   segment = Seg.new("/foo/bar/baz")
 

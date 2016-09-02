@@ -80,6 +80,20 @@ struct Seg
     end
   end
 
+  def match(regex : Regex) : String?
+    return nil if root?
+
+    orig = @pos
+    str = extract
+
+    if str && (matches = regex.match(str))
+      return matches[0]
+    else
+      @pos = orig
+      return nil
+    end
+  end
+
   def restore(str : String) : String?
     return nil if init?
 
